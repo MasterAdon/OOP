@@ -25,6 +25,8 @@ class Student:
         return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за домашнее задание: {self.grades_average} ' \
                f' \nКурсы в процесе изучения: {self.courses_in_progress[0]}, {self.courses_in_progress[1]} \nЗавершенные курсы: {self.finished_courses[0]} '
 
+    def __lt__(self, other):
+        return self.grades_average < other.grades_average
 
 class Mentor:
     def __init__(self, name, surname):
@@ -44,6 +46,8 @@ class Lecturer:
     def __str__(self):
         return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.grade_average} '
 
+    def __gt__(self, other):
+        return self.grade_average > other.grades_average
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
