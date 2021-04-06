@@ -6,6 +6,7 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        self.grades_average = {}
 
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)
@@ -19,6 +20,10 @@ class Student:
                 lecturer.grades[course] = [grade]
         else:
             return "Ошибка"
+
+    def __str__(self):
+        return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за домашнее задание: {self.grades_average} ' \
+               f' \nКурсы в процесе изучения: {self.courses_in_progress[0]}, {self.courses_in_progress[1]} \nЗавершенные курсы: {self.finished_courses[0]} '
 
 
 class Mentor:
@@ -34,6 +39,10 @@ class Lecturer:
         self.surname = surname
         self.courses_attached = []
         self.grades = {}
+        self.grade_average = {}
+
+    def __str__(self):
+        return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.grade_average} '
 
 
 class Reviewer(Mentor):
@@ -46,9 +55,14 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        return f'Имя: {self.name} \nФамилия: {self.surname}'
+
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
+best_student.courses_in_progress += ['GIT']
+best_student.finished_courses += ['Введение в програмирование']
 
 cool_mentor = Reviewer('Some', 'Buddy')
 cool_mentor.courses_attached += ['Python']
@@ -60,14 +74,30 @@ cool_mentor.rate_hw(best_student, 'Python', 10)
 # print(best_student.grades)
 
 
-best_lector = Lecturer('Ivan', 'Ivanov')
-best_lector.courses_attached += ['Python']
+some_lecturer = Lecturer('Ivan', 'Ivanov')
+some_lecturer.courses_attached += ['Python']
 
-cool_student = Student('Petr', 'Petrov', 'man')
-cool_student.courses_in_progress += ['Python']
+any_student = Student('Petr', 'Petrov', 'man')
+any_student.courses_in_progress += ['Python']
 
-cool_student.rate_lec(best_lector, 'Python', 10)
-cool_student.rate_lec(best_lector, 'Python', 8)
+any_student.rate_lec(some_lecturer, 'Python', 10)
+any_student.rate_lec(some_lecturer, 'Python', 8)
 
-# print(best_lector.grades)
-# Реализована взможность получения оценки для преподователей, по аналогии с оценками студентов
+# print(some_lecturer.grades)
+# Реализована возможность получения оценки для преподователей, по аналогии с оценками студентов
+
+for a, b in some_lecturer.grades.items():
+    some_lecturer.grade_average = sum(b) // len(b)
+
+# Расчет средней оценки лектора
+for c, d in best_student.grades.items():
+    best_student.grades_average = sum(d) // len(d)
+
+# Расчет средней оценки стцдента
+some_lecturer1 = Reviewer('Petr', 'Petrov')
+
+# print(some_lecturer1) #Вывод для проверяющих
+# print(some_lecturer) #Вывод для лекторов
+# print(best_student)  #Вывод для студентов
+
+
